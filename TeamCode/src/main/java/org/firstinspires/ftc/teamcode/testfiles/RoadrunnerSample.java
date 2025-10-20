@@ -55,6 +55,7 @@ public class RoadrunnerSample extends LinearOpMode {
                 .strafeTo(new Vector2d(12, 50))
                 .splineTo(new Vector2d(30,60), Math.toRadians(75))
                 ;
+
         TrajectoryActionBuilder trajectoryIfNotAprilTag = drive.actionBuilder(new Pose2d(36,12,Math.toRadians(90)))
                 .strafeToLinearHeading(new Vector2d(60,60), Math.toRadians(270))
                 .turn(Math.toRadians(1080))
@@ -97,6 +98,7 @@ public class RoadrunnerSample extends LinearOpMode {
                         initialTrajectory.build()
                 )
         );
+
         LLResult results = limelight.getLatestResult();
         if (results.isValid()) {
             int AprilTag = limelight.getAprilTagID(results);
