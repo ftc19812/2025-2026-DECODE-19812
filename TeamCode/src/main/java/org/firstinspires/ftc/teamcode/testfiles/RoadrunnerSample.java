@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode.testfiles;
 
 import com.acmerobotics.roadrunner.ParallelAction;
+import com.acmerobotics.roadrunner.PoseVelocity2d;
+import com.acmerobotics.roadrunner.Trajectory;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.qualcomm.hardware.limelightvision.LLResult;
 import com.qualcomm.hardware.limelightvision.Limelight3A;
@@ -37,7 +39,6 @@ public class RoadrunnerSample extends LinearOpMode {
         limelightcam = hardwareMap.get(Limelight3A.class, "limelight");
         limelight = new LimelightManager(limelightcam, telemetry);
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPos);
-
 
         TrajectoryActionBuilder trajectory = drive.actionBuilder(new Pose2d(24,12,Math.toRadians(90)))
                 .strafeToLinearHeading(new Vector2d(36,36), Math.toRadians(0))
@@ -90,80 +91,34 @@ public class RoadrunnerSample extends LinearOpMode {
         telemetry.update();
         int loop = 1;
         waitForStart();
-
+        PoseVelocity2d pose = drive.updatePoseEstimate();
         if (isStopRequested()) return;
 
-        Actions.runBlocking(
-                new SequentialAction(
-                        initialTrajectory.build()
-                )
-        );
-
-        LLResult results = limelight.getLatestResult();
-        if (results.isValid()) {
-            int AprilTag = limelight.getAprilTagID(results);
-            telemetry.addData("Result", "Valid");
-
-            if (AprilTag != 404) {
-                Actions.runBlocking(
-                        new SequentialAction(
-                                trajectoryIfAprilTag.build() // brings it to the center of the field
-                                // facing 90 deg.
-//
-                        )
-                );
-            }
-        } else {
-            telemetry.addData("Result", "Invalid");
+        if (limelight.ScanAndGetAprilTagID(23)) {
             Actions.runBlocking(
                     new SequentialAction(
-                            trajectoryIfNotAprilTag.build() // brings it to the center of the field
-                            // facing 90 deg.
-//
+                            trajectoryIfAprilTag.build()
                     )
             );
-            telemetry.addData("Limelight", "was not found");
-            telemetry.update();
+        } else {
+            // do whatever that happens when 23 is not scanned.
+            Actions.runBlocking(
+                    new SequentialAction(
+                            amazingTrajectory.build()
+                    )
+            );
         }
-//        while (opModeIsActive() && loop == 1) {
-//            loop+=1;
-//            telemetry.addLine("Update 1");
-//            telemetry.update();
-//            Actions.runBlocking(
-//                    new SequentialAction(
-//                            coolTrajectory.build()
-//                    )
-//            );
-//            telemetry.addLine("Update 2");
-//            telemetry.update();
-//
-            /*
-            LLResult results = limelight.getLatestResult();
-            if (results.isValid()) {
-                int AprilTag = limelight.getAprilTagID(results);
-                if (AprilTag != 404) {
-                    Actions.runBlocking(
-                            new SequentialAction(
-                                    trajectoryIfAprilTag.build() // brings it to the center of the field
-                                    // facing 90 deg.
-//
-                            )
-                    );
-                }
-            } else {
-                Actions.runBlocking(
-                        new SequentialAction(
-                                trajectoryIfNotAprilTag.build() // brings it to the center of the field
-                                // facing 90 deg.
-//
-                        )
-                );
-                telemetry.addData("Limelight", "was not found");
-                telemetry.update();
-            }
-//            */
-//
-//
-//        }
+
+        if(limelight.ScanAndGetAprilTagID(24)) {
+            Actions.runBlocking(
+                    new SequentialAction(
+                            trajectory.build()
+                    )
+            );
+        } else {
+            //INSERT STUFF HERE WHEN 24 IS NOT SCANNED
+        }
+
+
     }
 }
