@@ -50,8 +50,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 @TeleOp(name = "sigmasigmatestop", group = "Robot")
 public class DrivetrainTest extends OpMode {
     // This declares the four motors needed
-    DcMotor frontLeftDrive;
-    DcMotor frontRightDrive;
+    private DcMotor frontLeftDrive;
+    private DcMotor frontRightDrive;
     DcMotor backLeftDrive;
     DcMotor backRightDrive;
 

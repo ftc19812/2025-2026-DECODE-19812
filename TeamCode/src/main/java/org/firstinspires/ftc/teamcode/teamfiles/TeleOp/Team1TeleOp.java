@@ -20,13 +20,10 @@ public class Team1TeleOp extends OpMode {
     public DcMotor frontRight;
     public DcMotor backLeft;
     public DcMotor backRight;
-
-    public DcMotorEx intake;
-    public DcMotorEx outtake1;
-
-    public DcMotorEx chain;
-    public DcMotorEx outtake2;
-
+    public DcMotorEx outtake;
+    public Servo gate;
+    public boolean toggleOuttake = false;
+    public boolean triggerHasPressed = false;
 
     // make most variables that don't change constantly here
     // private DcMotorEx motorExample; // don't hardwareMap here!!!
@@ -36,12 +33,8 @@ public class Team1TeleOp extends OpMode {
         frontRight = hardwareMap.get(DcMotor.class, "rightFront");
         backLeft = hardwareMap.get(DcMotor.class, "leftBack");
         backRight = hardwareMap.get(DcMotor.class, "rightBack");
-        intake = hardwareMap.get(DcMotorEx.class, "intake");
-        chain = hardwareMap.get(DcMotorEx.class, "chain");
-        outtake1 = hardwareMap.get(DcMotorEx.class, "outtake1");
-        outtake2 = hardwareMap.get(DcMotorEx.class, "outtake2");
-        outtake1.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        outtake2.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        gate = hardwareMap.get(Servo.class, "gate");
+        outtake = hardwareMap.get(DcMotorEx.class, "outtake");
 
         // initialize variables (i.e. hardware map, set direction, set mode here!)
         // motorExample = hardwareMap.get(DcMotorEx.class, "motorExampleName");
@@ -55,27 +48,36 @@ public class Team1TeleOp extends OpMode {
     @Override
     public void loop() {
 
-         if (gamepad1.right_bumper) {
-             outtake1.setVelocity(2000);
-             outtake2.setVelocity(-2000);
-         } else {
-             outtake1.setVelocity(0);
-             outtake2.setVelocity(0);
-         }
+        //
 
-         if (gamepad1.a) {
-             chain.setPower(0.7);
-         } else {
-             chain.setPower(0);
-         }
+        if (gamepad1.right_trigger > 0) {
+            if (!triggerHasPressed) {
+                toggleOuttake = !toggleOuttake;
+                triggerHasPressed = true;
+            }
+        } else {
+            triggerHasPressed = false;
+        }
 
-         if (gamepad1.b) {
-             intake.setPower(1);
-         } else {
-             intake.setPower(0);
-         }
+
+
+        if (toggleOuttake) {
+            outtake.setVelocity(2000);
+        } else {
+            outtake.setVelocity(0);
+        }
+        // 0 = close, 1 = open
+        if(gamepad1.rightBumperWasPressed()) {
+            if(gate.getPosition() == 1) {
+                gate.setPosition(0);
+            } else {
+                gate.setPosition(1);
+            }
+        }
 
         drive(-gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
+
+
 
     }
 

@@ -12,6 +12,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.Pose3D;
 public class LimeLightSample2 extends LinearOpMode {
 
     private Limelight3A limelight;
+    private Limelight3A limelighgts;
 
     @Override
     public void runOpMode() throws InterruptedException
