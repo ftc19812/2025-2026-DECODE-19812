@@ -1,7 +1,9 @@
 package org.firstinspires.ftc.teamcode.samplefiles;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+@TeleOp(name = "Linear OpMode Sample")
 public class LinearOpModeSimple extends LinearOpMode {
     @Override
     public void runOpMode() {

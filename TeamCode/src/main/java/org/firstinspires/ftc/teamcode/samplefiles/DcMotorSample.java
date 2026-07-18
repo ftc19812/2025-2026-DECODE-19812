@@ -1,12 +1,15 @@
 package org.firstinspires.ftc.teamcode.samplefiles;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 
+@TeleOp(name = "DC Motor Sample")
 public class DcMotorSample extends OpMode {
     DcMotorEx frontLeft;
     DcMotorEx frontRight;
@@ -22,6 +25,10 @@ public class DcMotorSample extends OpMode {
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
         backLeft = hardwareMap.get(DcMotorEx.class, "backLeft");
         backRight = hardwareMap.get(DcMotorEx.class, "backRight");
+
+        // let's say frontLeft and backRight were installed backwards. Let's reverse them!
+        frontLeft.setDirection(DcMotor.Direction.REVERSE);
+        backRight.setDirection(DcMotor.Direction.REVERSE);
 
         // stop and reset encoders in all wheels from the beginning!
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
