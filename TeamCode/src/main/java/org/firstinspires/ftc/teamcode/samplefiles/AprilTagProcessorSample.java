@@ -17,8 +17,7 @@ public class AprilTagProcessorSample extends OpMode {
     @Override
     public void init() {
 
-        WebcamName webcam =
-                hardwareMap.get(WebcamName.class, "Webcam 1");
+        WebcamName webcam = hardwareMap.get(WebcamName.class, "Webcam 1");
 
         aprilTag = new AprilTagProcessor.Builder()
                 .build();
@@ -39,14 +38,11 @@ public class AprilTagProcessorSample extends OpMode {
 
             if (detection.ftcPose != null) {
 
-                telemetry.addData("Range",
-                        detection.ftcPose.range);
+                telemetry.addData("Range", detection.ftcPose.range);
 
-                telemetry.addData("Bearing",
-                        detection.ftcPose.bearing);
+                telemetry.addData("Bearing", detection.ftcPose.bearing);
 
-                telemetry.addData("Yaw",
-                        detection.ftcPose.yaw);
+                telemetry.addData("Yaw", detection.ftcPose.yaw);
             }
         }
 

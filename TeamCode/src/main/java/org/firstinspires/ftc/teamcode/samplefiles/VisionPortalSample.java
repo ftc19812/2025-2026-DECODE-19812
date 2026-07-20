@@ -31,8 +31,7 @@ public class VisionPortalSample extends OpMode {
     @Override
     public void loop() {
 
-        telemetry.addData("Camera State",
-                visionPortal.getCameraState());
+        telemetry.addData("Camera State", visionPortal.getCameraState());
 
         telemetry.update();
     }

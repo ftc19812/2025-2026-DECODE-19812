@@ -13,9 +13,7 @@ public class Limelight3ASample extends OpMode {
     @Override
     public void init() {
 
-        limelight =
-                hardwareMap.get(Limelight3A.class,
-                        "limelight");
+        limelight = hardwareMap.get(Limelight3A.class,"limelight");
 
         limelight.start();
 
@@ -25,19 +23,15 @@ public class Limelight3ASample extends OpMode {
     @Override
     public void loop() {
 
-        LLResult result =
-                limelight.getLatestResult();
+        LLResult result = limelight.getLatestResult();
 
         if (result.isValid()) {
 
-            telemetry.addData("TX",
-                    result.getTx());
+            telemetry.addData("TX", result.getTx());
 
-            telemetry.addData("TY",
-                    result.getTy());
+            telemetry.addData("TY", result.getTy());
 
-            telemetry.addData("Area",
-                    result.getTa());
+            telemetry.addData("Area", result.getTa());
         }
         else {
 
